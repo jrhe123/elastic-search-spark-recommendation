@@ -4,3 +4,6 @@
 ## Personalized Content Recommendation
 
 ## Highly accurate search results
+
+## ERM
+<img width="450" alt="MySQL schemas" src="https://github.com/user-attachments/assets/30adb460-33c9-4d6f-94af-4151492f2d99">
