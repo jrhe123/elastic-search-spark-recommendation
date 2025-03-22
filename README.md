@@ -10,3 +10,10 @@
 
 ## Architecture
 <img width="450" alt="Architecture" src="https://github.com/user-attachments/assets/b854f48c-deb3-4e5d-87c6-09f45b3bc1f1">
+
+## Maven
+
+- MyBatis Generator
+1. pom.xml - adding MyBatis Generator as plugin
+2. mybatis-generator.xml - config files including driver / model / dao / mapper / table
+3. add maven job - mybatis-generator:generate
