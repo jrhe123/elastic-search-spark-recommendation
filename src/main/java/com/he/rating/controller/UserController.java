@@ -1,6 +1,8 @@
 package com.he.rating.controller;
 
+import com.he.rating.common.CommonError;
 import com.he.rating.common.CommonRes;
+import com.he.rating.common.EmBussinessError;
 import com.he.rating.model.UserModel;
 import com.he.rating.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +25,11 @@ public class UserController {
             @RequestParam(name="id") Integer id
     ) {
         UserModel user = userService.getUser(id);
+        if (user == null) {
+            CommonError commonError = new CommonError(
+                    EmBussinessError.NO_OBJECT_FOUND);
+            return CommonRes.create(commonError, "fail");
+        }
         return CommonRes.create(user);
     }
 }
