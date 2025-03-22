@@ -57,7 +57,7 @@
 			<artifactId>lombok</artifactId>
 		</dependency>
 
-		<!--mybatis-->
+		<!--mybatis plus-->
 		<dependency>
 			<groupId>com.mysql</groupId>
 			<artifactId>mysql-connector-j</artifactId>
@@ -82,6 +82,7 @@
 			<version>3.0.4</version>
 		</dependency>
 
+		<!--aop-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>

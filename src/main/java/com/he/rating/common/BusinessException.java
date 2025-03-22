@@ -8,4 +8,13 @@ public class BusinessException extends Exception {
         super();
         this.commonError = new CommonError(emBussinessError);
     }
+
+    public CommonError getCommonError() {
+        return commonError;
+    }
+
+    public void setCommonError(CommonError commonError) {
+        this.commonError = commonError;
+    }
+
 }

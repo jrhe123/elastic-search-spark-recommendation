@@ -2,7 +2,8 @@ package com.he.rating.common;
 
 public enum EmBussinessError {
 
-    NO_OBJECT_FOUND(10001, "No object found");
+    NO_OBJECT_FOUND(10001, "No object found"),
+    UNKNOWN_ERROR(10002, "Unknown error");
 
     private Integer errCode;
 
