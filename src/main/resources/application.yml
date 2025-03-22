@@ -1,7 +1,9 @@
 spring:
   web:
     resources:
-      add-mappings: false # ???????????
+      add-mappings: true # false -> ???????????
+  mvc:
+    static-path-pattern: /static/**
   application:
     name: rating
   profiles:
