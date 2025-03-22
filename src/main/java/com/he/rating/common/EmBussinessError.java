@@ -4,7 +4,8 @@ public enum EmBussinessError {
 
     NO_OBJECT_FOUND(10001, "No object found"),
     UNKNOWN_ERROR(10002, "Unknown error"),
-    NO_HANDLER_FOUND(10003, "No route found");
+    NO_HANDLER_FOUND(10003, "No route found"),
+    BIND_EXCEPTION_ERROR(10004, "Request params error");
 
     private Integer errCode;
 

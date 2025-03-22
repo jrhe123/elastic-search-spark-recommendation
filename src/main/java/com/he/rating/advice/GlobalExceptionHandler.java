@@ -6,6 +6,7 @@ import com.he.rating.common.CommonRes;
 import com.he.rating.common.EmBussinessError;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.ServletRequestBindingException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -29,6 +30,13 @@ public class GlobalExceptionHandler {
             return CommonRes.create(
                     new CommonError(
                             EmBussinessError.NO_HANDLER_FOUND
+                    ),
+                    "fail"
+            );
+        } else if (ex instanceof ServletRequestBindingException) {
+            return CommonRes.create(
+                    new CommonError(
+                            EmBussinessError.BIND_EXCEPTION_ERROR
                     ),
                     "fail"
             );
