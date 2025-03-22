@@ -1,5 +1,6 @@
 package com.he.rating.controller;
 
+import com.he.rating.common.CommonRes;
 import com.he.rating.model.UserModel;
 import com.he.rating.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,10 @@ public class UserController {
     }
 
     @GetMapping("/get")
-    public UserModel getUserModel(
+    public CommonRes getUserModel(
             @RequestParam(name="id") Integer id
     ) {
-        return userService.getUser(id);
+        UserModel user = userService.getUser(id);
+        return CommonRes.create(user);
     }
 }
