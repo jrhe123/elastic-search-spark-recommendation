@@ -1,5 +1,6 @@
 package com.he.rating.controller;
 
+import com.he.rating.common.BusinessException;
 import com.he.rating.common.CommonError;
 import com.he.rating.common.CommonRes;
 import com.he.rating.common.EmBussinessError;
@@ -23,12 +24,10 @@ public class UserController {
     @GetMapping("/get")
     public CommonRes getUserModel(
             @RequestParam(name="id") Integer id
-    ) {
+    ) throws BusinessException {
         UserModel user = userService.getUser(id);
         if (user == null) {
-            CommonError commonError = new CommonError(
-                    EmBussinessError.NO_OBJECT_FOUND);
-            return CommonRes.create(commonError, "fail");
+            throw new BusinessException(EmBussinessError.NO_OBJECT_FOUND);
         }
         return CommonRes.create(user);
     }
