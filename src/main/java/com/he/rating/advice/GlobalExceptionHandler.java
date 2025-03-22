@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,6 +23,13 @@ public class GlobalExceptionHandler {
 
             return CommonRes.create(
                     ((BusinessException) ex).getCommonError(),
+                    "fail"
+            );
+        } else if (ex instanceof NoHandlerFoundException) {
+            return CommonRes.create(
+                    new CommonError(
+                            EmBussinessError.NO_HANDLER_FOUND
+                    ),
                     "fail"
             );
         } else {
