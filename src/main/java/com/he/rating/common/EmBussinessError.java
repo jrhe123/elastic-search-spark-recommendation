@@ -10,7 +10,8 @@ public enum EmBussinessError {
     PARAMETER_VALIDATION_ERROR(10005, "Request parameter validation error"),
 
     // user error
-    REGISTER_DUP_FAIL(20001, "Duplicated user with telephone");
+    REGISTER_DUP_FAIL(20001, "Duplicated user with telephone"),
+    LOGIN_FAIL(20002, "Telephone or password incorrect");
 
     private Integer errCode;
 

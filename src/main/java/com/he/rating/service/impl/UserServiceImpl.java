@@ -45,6 +45,16 @@ public class UserServiceImpl implements UserService{
         return getUser(registerUser.getId());
     }
 
+    @Override
+    public UserModel login(String telephone, String password) throws NoSuchAlgorithmException, BusinessException {
+        UserModel userModel =
+                userModelMapper.selectByTelephoneAndPassword(telephone, encodeByMd5(password));
+        if (userModel == null) {
+            throw new BusinessException(EmBussinessError.LOGIN_FAIL);
+        }
+        return userModel;
+    }
+
     private String encodeByMd5(String str) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
         byte[] hash = digest.digest(

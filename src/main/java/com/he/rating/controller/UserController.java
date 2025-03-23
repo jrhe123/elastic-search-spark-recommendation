@@ -2,8 +2,10 @@ package com.he.rating.controller;
 
 import com.he.rating.common.*;
 import com.he.rating.model.UserModel;
+import com.he.rating.request.LoginReq;
 import com.he.rating.request.RegisterReq;
 import com.he.rating.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +19,13 @@ import java.security.NoSuchAlgorithmException;
 @RequestMapping(value ="user")
 public class UserController {
 
+    public static final String CURRENT_USER_SESSION = "currentUserSession";
+
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @GetMapping("/index")
     public ModelAndView index() {
@@ -45,6 +52,29 @@ public class UserController {
 
         UserModel registered = userService.register(userModel);
         return CommonRes.create(registered);
+    }
+
+    @PostMapping("/login")
+    public CommonRes login(
+            @Valid @RequestBody LoginReq loginReq,
+            BindingResult bindingResult
+            ) throws BusinessException, NoSuchAlgorithmException {
+
+        if (bindingResult.hasErrors()) {
+            throw new BusinessException(
+                    EmBussinessError.PARAMETER_VALIDATION_ERROR,
+                    CommonUtil.processErrorString(bindingResult)
+            );
+        }
+
+        UserModel userModel = userService.login(loginReq.getTelephone(), loginReq.getPassword());
+
+        // add login session
+        // NOTE: we can check it with breakpoint
+        // & search "httpServletRequest.getSession().getAttribute("currentUserSession")"
+        httpServletRequest.getSession().setAttribute(CURRENT_USER_SESSION, userModel);
+
+        return CommonRes.create(userModel);
     }
 
 
