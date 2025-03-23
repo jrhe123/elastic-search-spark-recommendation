@@ -14,7 +14,6 @@ public class CommonUtil {
         for (FieldError fieldError : bindingResult.getFieldErrors()) {
             sb.append(fieldError.getDefaultMessage()).append(",");
         }
-        sb.substring(0, sb.length() - 1);
-        return sb.toString();
+        return sb.substring(0, sb.length() - 1);
     }
 }
