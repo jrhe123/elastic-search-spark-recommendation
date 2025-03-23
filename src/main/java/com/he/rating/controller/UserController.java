@@ -35,6 +35,7 @@ public class UserController {
         return mav;
     }
 
+
     @PostMapping("/register")
     public CommonRes register(
             @Valid @RequestBody RegisterReq registerReq,
@@ -53,6 +54,7 @@ public class UserController {
         UserModel registered = userService.register(userModel);
         return CommonRes.create(registered);
     }
+
 
     @PostMapping("/login")
     public CommonRes login(
@@ -78,10 +80,19 @@ public class UserController {
     }
 
 
-    @GetMapping("/test")
-    public String test(){
-        return "test 123";
+    @PostMapping("/logout")
+    public CommonRes logout() throws BusinessException, NoSuchAlgorithmException {
+        httpServletRequest.getSession().invalidate();
+        return CommonRes.create(null);
     }
+
+
+    @PostMapping("/get_current_user")
+    public CommonRes getCurrentUser() throws BusinessException, NoSuchAlgorithmException {
+        UserModel userModel = (UserModel) httpServletRequest.getSession().getAttribute(CURRENT_USER_SESSION);
+        return CommonRes.create(userModel);
+    }
+
 
     @GetMapping("/get")
     public CommonRes getUserModel(
