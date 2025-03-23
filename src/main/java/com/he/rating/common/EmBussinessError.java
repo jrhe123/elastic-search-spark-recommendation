@@ -11,7 +11,10 @@ public enum EmBussinessError {
 
     // user error
     REGISTER_DUP_FAIL(20001, "Duplicated user with telephone"),
-    LOGIN_FAIL(20002, "Telephone or password incorrect");
+    LOGIN_FAIL(20002, "Telephone or password incorrect"),
+
+    // admin error
+    ADMIN_SHOULD_LOGIN(30001, "Admin should login");
 
     private Integer errCode;
 

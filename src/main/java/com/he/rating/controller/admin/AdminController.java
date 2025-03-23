@@ -1,5 +1,6 @@
 package com.he.rating.controller.admin;
 
+import com.he.rating.aspect.AdminPermission;
 import com.he.rating.common.BusinessException;
 import com.he.rating.common.EmBussinessError;
 import jakarta.servlet.http.HttpServletRequest;
@@ -29,19 +30,20 @@ public class AdminController {
 
     public static final String CURRENT_ADMIN_SESSION = "currentAdminSession";
 
-    @GetMapping(value = "/index")
+    @RequestMapping(value = "/index", method = RequestMethod.GET)
+    @AdminPermission(produceType = "text/html")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView("/admin/admin/index.html");
         return mav;
     }
 
-    @GetMapping(value = "/login_page")
+    @RequestMapping(value = "/login_page", method = RequestMethod.GET)
     public ModelAndView loginPage() {
         ModelAndView mav = new ModelAndView("/admin/admin/login.html");
         return mav;
     }
 
-    @PostMapping(value = "/login")
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String login(
             @RequestParam("email") String email,
             @RequestParam("password") String password
