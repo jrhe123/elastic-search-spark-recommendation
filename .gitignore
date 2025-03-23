@@ -57,3 +57,6 @@ Thumbs.db
 
 *.psd
 *.svg
+
+# === FE assets includes large files ===
+src/main/resources/static/assets/global/plugins/
