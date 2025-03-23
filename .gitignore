@@ -44,3 +44,16 @@ Thumbs.db
 /bin/
 /tmp/
 /*.bak
+
+*.png
+*.jpg
+*.jpeg
+*.gif
+
+**/*.js
+**/*.min.js
+**/*.css
+**/*.min.css
+
+*.psd
+*.svg
