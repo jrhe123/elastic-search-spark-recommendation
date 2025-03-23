@@ -2,10 +2,15 @@ package com.he.rating.common;
 
 public enum EmBussinessError {
 
+    // general error
     NO_OBJECT_FOUND(10001, "No object found"),
     UNKNOWN_ERROR(10002, "Unknown error"),
     NO_HANDLER_FOUND(10003, "No route found"),
-    BIND_EXCEPTION_ERROR(10004, "Request params error");
+    BIND_EXCEPTION_ERROR(10004, "Request params error"),
+    PARAMETER_VALIDATION_ERROR(10005, "Request parameter validation error"),
+
+    // user error
+    REGISTER_DUP_FAIL(20001, "Duplicated user with telephone");
 
     private Integer errCode;
 
