@@ -16,7 +16,7 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- BEGIN HEAD -->
 <head>
     <meta charset="utf-8"/>
-    <title>Dashboard</title>
+    <title>Admin Dashboard</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <meta content="" name="description"/>
@@ -78,33 +78,57 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="page-content-wrapper">
         <div class="page-content">
             <h3 class="page-title">
-                Admin Dashboard
+                Merchant
             </h3>
+            <div class="row" style="margin:20px 0 20px 0;">
+                <button type="button" class="btn green add">Add Merchant&nbsp;<i class="m-icon-swapright m-icon-white"></i></button>
+            </div>
 
+            <!-- END PAGE TITLE & BREADCRUMB-->
             <div class="row">
-                <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                    <div class="dashboard-stat blue-madison">
-                        <div class="visual">
-                            <i class="fa fa-comments"></i>
+                <div class="portlet box blue">
+                    <div class="portlet-title">
+                        <div class="caption">
+                            <i class="fa fa-cogs"></i>Merchants
                         </div>
-                        <div class="details">
-                            <div class="number" th:text="${userCount}">
-
-                            </div>
-                            <div class="desc">
-                                Users
-                            </div>
+                    </div>
+                    <div class="portlet-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead>
+                                <tr>
+                                    <th>id</th>
+                                    <th>Name</th>
+                                    <th>Rating</th>
+                                    <th>Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="seller:${data.list}">
+                                    <td th:text="${seller.id}"></td>
+                                    <td th:text="${seller.name}"></td>
+                                    <td th:text="${seller.remarkScore}"></td>
+                                    <td th:text="${seller.disabledFlag}"></td>
+                                    <td>
+                                        <a th:style="(${seller.disabledFlag}==0) ?'display:none'" href="#"  th:id="'up'+${seller.id}"  th:attr="data-id=${seller.id}" class="btn default btn-xs blue">Enable</a>
+                                        <a th:style="(${seller.disabledFlag}==1) ?'display:none'" href="#"  th:id="'down'+${seller.id}" th:attr="data-id=${seller.id}" class="btn default btn-xs red">Disable</a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+                <div>
+                    <ul id="page-container" class="pagination"></ul>
+                </div>
             </div>
         </div>
-
-
-            <!-- END PAGE CONTENT-->
-        </div>
+        <!-- END PAGE CONTENT-->
     </div>
-    <!-- END CONTENT -->
+</div>
+<!-- END CONTENT -->
 </div>
 <!-- END CONTAINER -->
 <footer th:replace="admin/common/footer :: footer"></footer>
@@ -154,13 +178,81 @@ License: You must have a valid license purchased only from themeforest(the above
 <!-- END PAGE LEVEL SCRIPTS -->
 <script th:inline="javascript">
 
-
-
-
     jQuery(document).ready(function() {
         Metronic.init(); // init metronic core componets
         Layout.init(); // init layout
         Index.init();
+        var baseUrl = "/admin/seller/index?page="
+        setUrl(baseUrl);
+        var totalSize = /*[[${data.total}]]*/;
+        var countPerPage = /*[[${data.pageSize}]]*/;
+        var currentPage = /*[[${data.pageNum}]]*/;
+        var allPage = /*[[${data.pages}]]*/;
+        setPage(document.getElementById("page-container"),allPage,currentPage);
+        if(allPage <= 1){
+            $("#page-container").hide();
+        }
+
+        $(".add").on("click", function(){
+            window.location.href = "/admin/seller/createpage";
+        });
+
+
+        $("a[id^='up']").on('click',function(){
+            var res = window.confirm("Are you sure to activate the merchant?");
+            if(!res){
+                return;
+            }
+            var id = $(this).data("id");
+            $.ajax({
+                type : "POST",
+                contentType : "application/x-www-form-urlencoded",
+                url : "/admin/seller/up",
+                data: {
+                    "id": id,
+                },
+                success : function(data){
+                    if(data.status == 'success'){
+                        alert("Merchant has been activated");
+                        window.location.href = "/admin/seller/index";
+                    }else{
+                        alert("Request failed, reason: "+data.data.errMsg);
+                    }
+                },
+                error : function(data){
+                    alert("Request failed, reason: "+data.responseText);
+                }
+            });
+        });
+
+
+
+        $("a[id^='down']").on('click',function(){
+            var res = window.confirm("Are you sure to disable the merchant?");
+            if(!res){
+                return;
+            }
+            var id = $(this).data("id");
+            $.ajax({
+                type : "POST",
+                contentType : "application/x-www-form-urlencoded",
+                url : "/admin/seller/down",
+                data: {
+                    "id": id,
+                },
+                success : function(data){
+                    if(data.status == 'success'){
+                        alert("Merchant has been disabled");
+                        window.location.href = "/admin/seller/index";
+                    }else{
+                        alert("Request failed, reason: "+data.data.errMsg);
+                    }
+                },
+                error : function(data){
+                    alert("Request failed, reason: "+data.responseText);
+                }
+            });
+        });
 
     });
 </script>
