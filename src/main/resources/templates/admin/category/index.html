@@ -186,8 +186,9 @@ License: You must have a valid license purchased only from themeforest(the above
         setUrl(baseUrl);
         var totalSize = /*[[${data.total}]]*/;
         var countPerPage = /*[[${data.pageSize}]]*/;
+        var currentPage = /*[[${data.pageNum}]]*/
         var allPage = /*[[${data.pages}]]*/;
-        setPage(document.getElementById("page-container"),allPage,/*[[${currentPage}]]*/);
+        setPage(document.getElementById("page-container"),allPage,currentPage);
         if(allPage <= 1){
             $("#page-container").hide();
         }
