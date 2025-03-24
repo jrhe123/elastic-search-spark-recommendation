@@ -4,13 +4,13 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.he.rating.aspect.AdminPermission;
 import com.he.rating.common.BusinessException;
-import com.he.rating.common.CommonRes;
 import com.he.rating.common.CommonUtil;
 import com.he.rating.common.EmBussinessError;
-import com.he.rating.model.CategoryModel;
+import com.he.rating.model.ShopModel;
 import com.he.rating.request.CategoryCreateReq;
 import com.he.rating.request.PageQuery;
-import com.he.rating.service.CategoryService;
+import com.he.rating.request.ShopCreateReq;
+import com.he.rating.service.ShopService;
 import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,36 +18,32 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @Controller
-@RequestMapping("/admin/category")
-public class CategoryController {
-
+@RequestMapping(value = "/admin/shop")
+public class ShopController {
 
     @Autowired
-    private CategoryService categoryService;
-
-
+    private ShopService shopService;
+    
     @RequestMapping("/index")
     @AdminPermission(produceType = "text/html")
     public ModelAndView index(
             PageQuery pageQuery
     ) {
-        ModelAndView mav = new ModelAndView("admin/category/index.html");
+        ModelAndView mav = new ModelAndView("admin/shop/index.html");
 
         PageHelper.startPage(
                 pageQuery.getPage(), pageQuery.getSize()
         );
-        List<CategoryModel> categoryModels = categoryService.selectAll();
-        PageInfo<CategoryModel> categoryModelPageInfo = new PageInfo<>(categoryModels);
+        List<ShopModel> shopModels = shopService.selectAll();
+        PageInfo<ShopModel> shopModelPageInfo = new PageInfo<>(shopModels);
 
-        mav.addObject("data", categoryModelPageInfo);
-        mav.addObject("CONTROLLER_NAME", "category");
+        mav.addObject("data", shopModelPageInfo);
+        mav.addObject("CONTROLLER_NAME", "shop");
         mav.addObject("ACTION_NAME", "index");
         return mav;
     }
@@ -55,9 +51,9 @@ public class CategoryController {
     @RequestMapping("/create_page")
     @AdminPermission(produceType = "text/html")
     public ModelAndView createPage() {
-        ModelAndView mav = new ModelAndView("admin/category/create.html");
+        ModelAndView mav = new ModelAndView("admin/shop/create.html");
 
-        mav.addObject("CONTROLLER_NAME", "category");
+        mav.addObject("CONTROLLER_NAME", "shop");
         mav.addObject("ACTION_NAME", "create");
         return mav;
     }
@@ -65,7 +61,7 @@ public class CategoryController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @AdminPermission(produceType = "text/html")
     public String create(
-            @Valid CategoryCreateReq categoryCreateReq,
+            @Valid ShopCreateReq shopCreateReq,
             BindingResult bindingResult
     ) throws BusinessException {
         if (bindingResult.hasErrors()) {
@@ -75,11 +71,11 @@ public class CategoryController {
             );
         }
 
-        CategoryModel categoryModel = new CategoryModel();
-        BeanUtils.copyProperties(categoryCreateReq, categoryModel);
-        categoryService.create(categoryModel);
+        ShopModel shopModel = new ShopModel();
+        BeanUtils.copyProperties(shopCreateReq, shopModel);
+        shopService.create(shopModel);
 
-        return "redirect:/admin/category/index";
+        return "redirect:/admin/shop/index";
     }
 
 }
