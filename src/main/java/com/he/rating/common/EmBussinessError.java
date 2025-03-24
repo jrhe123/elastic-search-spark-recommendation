@@ -14,7 +14,12 @@ public enum EmBussinessError {
     LOGIN_FAIL(20002, "Telephone or password incorrect"),
 
     // admin error
-    ADMIN_SHOULD_LOGIN(30001, "Admin should login");
+    ADMIN_SHOULD_LOGIN(30001, "Admin should login"),
+
+    // category error
+    CATEGORY_NAME_DUPLICATED(40001, "Category name already exists"),
+
+    ;
 
     private Integer errCode;
 
