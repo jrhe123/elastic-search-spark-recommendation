@@ -6,7 +6,10 @@ import com.he.rating.model.SellerModel;
 import com.he.rating.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,13 +20,20 @@ public class SellerServiceImpl implements SellerService {
 
 
     @Override
+    @Transactional
     public SellerModel create(SellerModel sellerModel) throws BusinessException {
-        return null;
+        sellerModel.setCreatedAt(new Date());
+        sellerModel.setUpdatedAt(new Date());
+        sellerModel.setRemarkScore(new BigDecimal(0));
+        sellerModel.setDisabledFlag(0);
+        sellerModelMapper.insertSelective(sellerModel);
+
+        return get(sellerModel.getId());
     }
 
     @Override
     public SellerModel get(Integer id) {
-        return null;
+        return sellerModelMapper.selectByPrimaryKey(id);
     }
 
     @Override
