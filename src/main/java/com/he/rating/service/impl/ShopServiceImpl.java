@@ -78,6 +78,15 @@ public class ShopServiceImpl implements ShopService {
 
     @Override
     public List<ShopModel> selectAll() {
-        return shopModelMapper.selectAll();
+        List<ShopModel> shopModels = shopModelMapper.selectAll();
+        shopModels.forEach(shopModel -> {
+            shopModel.setSellerModel(
+                    sellerService.get(shopModel.getSellerId())
+            );
+            shopModel.setCategoryModel(
+                    categoryService.get(shopModel.getCategoryId())
+            );
+        });
+        return shopModels;
     }
 }
