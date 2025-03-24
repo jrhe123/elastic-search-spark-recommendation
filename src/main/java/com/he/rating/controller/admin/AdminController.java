@@ -6,9 +6,11 @@ import com.he.rating.common.EmBussinessError;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -16,7 +18,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.Base64;
 
 @RestController
-@RequestMapping(value = "admin/admin")
+@RequestMapping(value = "/admin/admin")
 public class AdminController {
 
     @Value("${admin.email}")
@@ -34,6 +36,8 @@ public class AdminController {
     @AdminPermission(produceType = "text/html")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView("/admin/admin/index.html");
+        mav.addObject("CONTROLLER_NAME", "admin");
+        mav.addObject("ACTION_NAME", "index");
         return mav;
     }
 
@@ -44,7 +48,7 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String login(
+    public RedirectView login(
             @RequestParam("email") String email,
             @RequestParam("password") String password
     ) throws BusinessException, NoSuchAlgorithmException {
@@ -61,7 +65,7 @@ public class AdminController {
         ) {
             // success
             httpServletRequest.getSession().setAttribute(CURRENT_ADMIN_SESSION, email);
-            return "redirect:/admin/admin/index";
+            return new RedirectView("/admin/admin/index");
         }
 
         throw new BusinessException(
