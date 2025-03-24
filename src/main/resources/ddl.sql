@@ -9,3 +9,13 @@ CREATE TABLE `rating`.`user` (
                                  PRIMARY KEY (`id`),
                                  UNIQUE INDEX `telephone_unique_index` USING BTREE (`telephone`) VISIBLE
 );
+
+
+CREATE TABLE `rating`.`seller` (
+                                      `id` INT NOT NULL AUTO_INCREMENT,
+                                      `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                      `updated_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+                                      `name` VARCHAR(80) NOT NULL DEFAULT '',
+                                      `remark_score` DECIMAL(2,1) NOT NULL DEFAULT 0,
+                                      `disabled_flag` INT NOT NULL DEFAULT 0,
+                                      PRIMARY KEY (`id`));
