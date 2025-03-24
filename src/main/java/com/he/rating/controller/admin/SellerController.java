@@ -1,10 +1,13 @@
 package com.he.rating.controller.admin;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.he.rating.aspect.AdminPermission;
 import com.he.rating.common.BusinessException;
 import com.he.rating.common.CommonUtil;
 import com.he.rating.common.EmBussinessError;
 import com.he.rating.model.SellerModel;
+import com.he.rating.request.PageQuery;
 import com.he.rating.request.SellerCreateReq;
 import com.he.rating.service.SellerService;
 import jakarta.validation.Valid;
@@ -31,12 +34,18 @@ public class SellerController {
 
     @RequestMapping("/index")
     @AdminPermission(produceType = "text/html")
-    public ModelAndView index() {
+    public ModelAndView index(
+            PageQuery pageQuery
+    ) {
         ModelAndView mav = new ModelAndView("admin/seller/index.html");
 
+        PageHelper.startPage(
+                pageQuery.getPage(), pageQuery.getSize()
+        );
         List<SellerModel> sellerModels = sellerService.selectAll();
+        PageInfo<SellerModel> sellerModelPageInfo = new PageInfo<>(sellerModels);
 
-        mav.addObject("data", sellerModels);
+        mav.addObject("data", sellerModelPageInfo);
         mav.addObject("CONTROLLER_NAME", "seller");
         mav.addObject("ACTION_NAME", "index");
         return mav;
