@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             categoryModelMapper.insertSelective(categoryModel);
         } catch (DuplicateKeyException e) {
-            throw new BusinessException(EmBussinessError.CATEGORY_NAME_DUPLICATED)
+            throw new BusinessException(EmBussinessError.CATEGORY_NAME_DUPLICATED);
         }
 
         return get(categoryModel.getId());
