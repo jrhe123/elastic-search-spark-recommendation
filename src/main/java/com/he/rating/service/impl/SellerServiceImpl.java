@@ -1,6 +1,7 @@
 package com.he.rating.service.impl;
 
 import com.he.rating.common.BusinessException;
+import com.he.rating.common.EmBussinessError;
 import com.he.rating.dao.SellerModelMapper;
 import com.he.rating.model.SellerModel;
 import com.he.rating.service.SellerService;
@@ -42,7 +43,15 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public SellerModel changeStatus(Integer id, Integer disabledFlag) {
-        return null;
+    public SellerModel changeStatus(Integer id, Integer disabledFlag) throws BusinessException {
+        SellerModel sellerModel = sellerModelMapper.selectByPrimaryKey(id);
+        if (sellerModel == null) {
+            throw new BusinessException(EmBussinessError.PARAMETER_VALIDATION_ERROR);
+        }
+
+        sellerModel.setDisabledFlag(disabledFlag);
+        sellerModelMapper.updateByPrimaryKeySelective(sellerModel);
+        
+        return sellerModel;
     }
 }

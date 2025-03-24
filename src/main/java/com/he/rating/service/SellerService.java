@@ -13,5 +13,5 @@ public interface SellerService {
 
     List<SellerModel> selectAll();
 
-    SellerModel changeStatus(Integer id, Integer disabledFlag);
+    SellerModel changeStatus(Integer id, Integer disabledFlag) throws BusinessException;
 }

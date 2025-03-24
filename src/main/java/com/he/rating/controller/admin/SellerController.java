@@ -4,6 +4,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.he.rating.aspect.AdminPermission;
 import com.he.rating.common.BusinessException;
+import com.he.rating.common.CommonRes;
 import com.he.rating.common.CommonUtil;
 import com.he.rating.common.EmBussinessError;
 import com.he.rating.model.SellerModel;
@@ -15,10 +16,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
@@ -79,5 +77,21 @@ public class SellerController {
         sellerService.create(sellerModel);
 
         return "redirect:/admin/seller/index";
+    }
+
+    @RequestMapping(value = "down", method = RequestMethod.POST)
+    @AdminPermission(produceType = "text/html")
+    @ResponseBody
+    public CommonRes down(@RequestParam(value = "id") Integer id) throws BusinessException {
+        SellerModel sellerModel = sellerService.changeStatus(id, 1);
+        return CommonRes.create(sellerModel);
+    }
+
+    @RequestMapping(value = "up", method = RequestMethod.POST)
+    @AdminPermission(produceType = "text/html")
+    @ResponseBody
+    public CommonRes up(@RequestParam(value = "id") Integer id) throws BusinessException {
+        SellerModel sellerModel = sellerService.changeStatus(id, 0);
+        return CommonRes.create(sellerModel);
     }
 }
