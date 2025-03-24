@@ -43,6 +43,12 @@
       and password = #{password,jdbcType=VARCHAR}
   </select>
 
+  <select id="countAllUser" resultType="java.lang.Integer">
+    select
+        count(1)
+    from user
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated

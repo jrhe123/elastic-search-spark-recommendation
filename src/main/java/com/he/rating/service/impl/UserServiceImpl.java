@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService{
         return userModel;
     }
 
+    @Override
+    public Integer countAllUser() {
+        return userModelMapper.countAllUser();
+    }
+
     private String encodeByMd5(String str) throws NoSuchAlgorithmException {
         MessageDigest digest = MessageDigest.getInstance("MD5");
         byte[] hash = digest.digest(

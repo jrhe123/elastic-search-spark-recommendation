@@ -3,6 +3,7 @@ package com.he.rating.controller.admin;
 import com.he.rating.aspect.AdminPermission;
 import com.he.rating.common.BusinessException;
 import com.he.rating.common.EmBussinessError;
+import com.he.rating.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,6 +29,9 @@ public class AdminController {
     private String encryptPassword;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private HttpServletRequest httpServletRequest;
 
     public static final String CURRENT_ADMIN_SESSION = "currentAdminSession";
@@ -36,8 +40,11 @@ public class AdminController {
     @AdminPermission(produceType = "text/html")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView("/admin/admin/index.html");
+        Integer count = userService.countAllUser();
+
         mav.addObject("CONTROLLER_NAME", "admin");
         mav.addObject("ACTION_NAME", "index");
+        mav.addObject("userCount", count);
         return mav;
     }
 
