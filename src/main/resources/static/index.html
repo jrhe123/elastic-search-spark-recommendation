@@ -183,7 +183,7 @@
     <div id="firstHeader" class="titlebar activebar">
         <div class="topbar">
             <div class="citylist fl" id="citylist" tapmode="">Toronto<img src="./image/title_home_arrow_down_normal.png" alt="" class="citylistarrow"></div>
-            <span id="rightTitle" style="font-size:16px;color:white;float:right;padding-top:12px;">Login</span>
+            <span id="rightTitle" style="font-size:16px;color:white;float:right;padding-top:12px;padding-right: 12px;">Login</span>
         </div>
     </div>
 
@@ -249,6 +249,28 @@
 
 
 <script type="text/javascript">
+
+    var g_orderby = null;
+    var g_categoryFilter = null;
+    var g_tagFilter = null;
+
+    window.onload = function() {
+
+        var slider =
+            Swipe(document.getElementById('slider'), {
+                auto: 1000000,
+                continuous: true,
+                callback: function(pos) {
+                }
+            });
+    }
+
+    getFloat = function (number, n) {
+        n = n ? parseInt(n) : 0;
+        if (n <= 0) return Math.round(number);
+        number = Math.round(number * Math.pow(10, n)) / Math.pow(10, n);
+        return number;
+    };
 
     jQuery(document).ready(function() {
         var g_currentUser = null;
