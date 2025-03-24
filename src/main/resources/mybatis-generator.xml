@@ -28,7 +28,7 @@
         </javaClientGenerator>
 
         <!--生成对应表及类名-->
-        <table tableName="user" domainObjectName="UserModel"
+        <table tableName="seller" domainObjectName="SellerModel"
                enableCountByExample="false" enableUpdateByExample="false"
                enableDeleteByExample="false" enableSelectByExample="false"
                selectByExampleQueryId="false">
