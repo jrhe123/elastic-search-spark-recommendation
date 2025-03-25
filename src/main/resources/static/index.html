@@ -200,7 +200,7 @@
             </div>
         </div>
 
-        <div class="guesstitle" id="guess">Feel Lucky<img src="/static/image/home_competitive_icon.png" alt=""></div>
+        <div class="guesstitle" id="guess">Recommendations<img src="/static/image/home_competitive_icon.png" alt=""></div>
         <div class="home-tuan-list" id="tuanList">
 
         </div>
@@ -283,41 +283,41 @@
 
                 $("#longitude").val(longitude);
                 $("#latitude").val(latitude);
-                // $.ajax({
-                //     type: "GET",
-                //     url: "/shop/recommend?longitude=" + longitude + "&latitude=" + latitude,
-                //     success: function (data) {
-                //         if (data.status == 'success') {
-                //             var dataList = data.data;
-                //             for (var i = 0; i < dataList.length; i++) {
-                //                 var distance = dataList[i].distance;
-                //                 var distanceStr = "0m";
-                //                 if (distance >= 1000) {
-                //                     distanceStr = getFloat(distance / 1000, 1) + " km";
-                //                 } else {
-                //                     distanceStr = distance + " m";
-                //                 }
-                //                 var content = $('<a href="" class="item Fix hightitem">' +
-                //                     '<div class="cnt">' +
-                //                     '<img class="pic" src="' + dataList[i].iconUrl + '"/>' +
-                //                     '<div class="wrap">' +
-                //                     '<div class="wrap2">' +
-                //                     '<div class="content">' +
-                //                     '<div class="shopname">' + dataList[i].name + '</div><span class="distance">' + distanceStr + '</span>' +
-                //                     '<div class="title">' + dataList[i].tags + '</div>' +
-                //                     '<div class="info">' +
-                //                     '<span class="symbol">$</span>' +
-                //                     '<span class="price">' + dataList[i].pricePerMan + '</span></div> </div> </div> </div> </div></a>');
-                //                 $("#tuanList").append(content);
-                //             }
-                //         } else {
-                //             alert("Request failed, reason: " + data.data.errMsg);
-                //         }
-                //     },
-                //     error: function (data) {
-                //         alert("Request failed, reason: " + data.responseText);
-                //     }
-                // })
+                $.ajax({
+                    type: "GET",
+                    url: "/shop/recommend?longitude=" + longitude + "&latitude=" + latitude,
+                    success: function (data) {
+                        if (data.status == 'success') {
+                            var dataList = data.data;
+                            for (var i = 0; i < dataList.length; i++) {
+                                var distance = dataList[i].distance;
+                                var distanceStr = "0m";
+                                if (distance >= 1000) {
+                                    distanceStr = getFloat(distance / 1000, 1) + " km";
+                                } else {
+                                    distanceStr = distance + " m";
+                                }
+                                var content = $('<a href="" class="item Fix hightitem">' +
+                                    '<div class="cnt">' +
+                                    '<img class="pic" src="' + dataList[i].iconUrl + '"/>' +
+                                    '<div class="wrap">' +
+                                    '<div class="wrap2">' +
+                                    '<div class="content">' +
+                                    '<div class="shopname">' + dataList[i].name + '</div><span class="distance">' + distanceStr + '</span>' +
+                                    '<div class="title">' + dataList[i].tags + '</div>' +
+                                    '<div class="info">' +
+                                    '<span class="symbol">$</span>' +
+                                    '<span class="price">' + dataList[i].pricePerMan + '</span></div> </div> </div> </div> </div></a>');
+                                $("#tuanList").append(content);
+                            }
+                        } else {
+                            alert("Request failed, reason: " + data.data.errMsg);
+                        }
+                    },
+                    error: function (data) {
+                        alert("Request failed, reason: " + data.responseText);
+                    }
+                })
             }, function(error) {
                 console.error("Not support location service", error.message);
             }, {

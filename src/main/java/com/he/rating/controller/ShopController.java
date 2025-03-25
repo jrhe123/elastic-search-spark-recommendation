@@ -11,11 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-@Controller
+@RestController("/shop")
 @RequestMapping("/shop")
 public class ShopController {
 
@@ -26,7 +27,7 @@ public class ShopController {
     private CategoryService categoryService;
 
     // v1
-    @RequestMapping(value = "/recommend", method = RequestMethod.POST)
+    @RequestMapping(value = "/recommend", method = RequestMethod.GET)
     public CommonRes recommend(
             @RequestParam(name = "longitude", required = true) BigDecimal longitude,
             @RequestParam(name = "latitude", required = true) BigDecimal latitude
