@@ -3,6 +3,7 @@ package com.he.rating.controller;
 import com.he.rating.common.BusinessException;
 import com.he.rating.common.CommonRes;
 import com.he.rating.common.EmBussinessError;
+import com.he.rating.model.CategoryModel;
 import com.he.rating.model.ShopModel;
 import com.he.rating.service.CategoryService;
 import com.he.rating.service.ShopService;
@@ -49,15 +50,20 @@ public class ShopController {
     public CommonRes search(
             @RequestParam(name = "longitude", required = true) BigDecimal longitude,
             @RequestParam(name = "latitude", required = true) BigDecimal latitude,
-            @RequestParam(name = "keyword", required = true) String keyword
+            @RequestParam(name = "keyword", required = true) String keyword,
+            @RequestParam(name = "categoryId", required = false) Integer categoryId,
+            @RequestParam(name = "orderby", required = false) Integer orderby
     ) throws BusinessException {
         if (!StringUtils.hasLength(keyword) || longitude == null || latitude == null) {
             throw new BusinessException(EmBussinessError.PARAMETER_VALIDATION_ERROR);
         }
 
-        List<ShopModel> shopModels = shopService.search(longitude, latitude, keyword);
+        List<ShopModel> shopModels = shopService.search(
+                longitude, latitude, keyword, categoryId, orderby);
+        List<CategoryModel> categoryModels = categoryService.selectAll();
         Map<String, Object> resMap = new HashMap<>();
-        resMap.put("shops", shopModels);
+        resMap.put("shop", shopModels);
+        resMap.put("category", categoryModels);
         return CommonRes.create(resMap);
     }
 }
