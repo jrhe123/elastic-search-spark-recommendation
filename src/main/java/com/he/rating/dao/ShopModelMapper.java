@@ -63,4 +63,10 @@ public interface ShopModelMapper {
             @Param("longitude") BigDecimal longitude,
             @Param("latitude") BigDecimal latitude
     );
+
+    List<ShopModel> search(
+            @Param("longitude") BigDecimal longitude,
+            @Param("latitude") BigDecimal latitude,
+            @Param("keyword") String keyword
+    );
 }
