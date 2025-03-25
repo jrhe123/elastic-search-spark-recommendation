@@ -3,6 +3,9 @@ package com.he.rating.controller.admin;
 import com.he.rating.aspect.AdminPermission;
 import com.he.rating.common.BusinessException;
 import com.he.rating.common.EmBussinessError;
+import com.he.rating.service.CategoryService;
+import com.he.rating.service.SellerService;
+import com.he.rating.service.ShopService;
 import com.he.rating.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +35,15 @@ public class AdminController {
     private UserService userService;
 
     @Autowired
+    private CategoryService categoryService;
+
+    @Autowired
+    private SellerService sellerService;
+
+    @Autowired
+    private ShopService shopService;
+
+    @Autowired
     private HttpServletRequest httpServletRequest;
 
     public static final String CURRENT_ADMIN_SESSION = "currentAdminSession";
@@ -40,11 +52,19 @@ public class AdminController {
     @AdminPermission(produceType = "text/html")
     public ModelAndView index() {
         ModelAndView mav = new ModelAndView("/admin/admin/index.html");
-        Integer count = userService.countAllUser();
+        Integer userCount = userService.countAllUser();
+        Integer categoryCount = categoryService.countAllCategory();
+        Integer sellerCount = sellerService.countAllSeller();
+        Integer shopCount = shopService.countAllShop();
 
         mav.addObject("CONTROLLER_NAME", "admin");
         mav.addObject("ACTION_NAME", "index");
-        mav.addObject("userCount", count);
+
+        // statistics
+        mav.addObject("userCount", userCount);
+        mav.addObject("categoryCount", categoryCount);
+        mav.addObject("sellerCount", sellerCount);
+        mav.addObject("shopCount", shopCount);
         return mav;
     }
 

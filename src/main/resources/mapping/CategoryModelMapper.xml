@@ -41,6 +41,12 @@
       order by sort DESC, id ASC
     </select>
 
+    <select id="countAllCategory" resultType="java.lang.Integer">
+      select
+          count(1)
+      from category
+    </select>
+
     <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated
