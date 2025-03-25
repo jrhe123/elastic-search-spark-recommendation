@@ -57,6 +57,15 @@
     from shop
   </select>
 
+
+  <select id="recommend" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from shop
+    order by id ASC
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     <!--
       WARNING - @mbg.generated
