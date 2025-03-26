@@ -60,3 +60,6 @@ Thumbs.db
 
 # === FE assets includes large files ===
 src/main/resources/static/assets/global/plugins/
+
+# elastic search large files
+logstash/
